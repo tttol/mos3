@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io"
+	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -20,11 +20,13 @@ func main() {
 	http.HandleFunc("/rmdir", rmdirHandler)
 	http.HandleFunc("/renamedir", renamedirHandler)
 
-	fmt.Println("Starting server at :3333")
+	slog.Info("Starting server at :3333")
 	http.ListenAndServe(":3333", nil)
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+
+	logRequestHeaders(r)
 	files, err := os.ReadDir(uploadDir)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
