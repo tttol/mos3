@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Server</title>
+</head>
+<body>
+    <h1>File Server</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+
+    <form action="/mkdir" method="post">
+        <input type="text" name="dirname" placeholder="Directory name">
+        <button type="submit">Create Directory</button>
+    </form>
+
+    <h2>Files</h2>
+    <ul>
+        {{range .}}
+        <li>{{.Name}}
+            <form action="/delete" method="post" style="display:inline">
+                <input type="hidden" name="filename" value="{{.Name}}">
+                <button type="submit">Delete</button>
+            </form>
+            <form action="/rename" method="post" style="display:inline">
+                <input type="text" name="newFilename" placeholder="New name">
+                <input type="hidden" name="oldFilename" value="{{.Name}}">
+                <button type="submit">Rename</button>
+            </form>
+            {{if .IsDir}}
+            <form action="/rmdir" method="post" style="display:inline">
+                <input type="hidden" name="dirname" value="{{.Name}}">
+                <button type="submit">Delete Directory</button>
+            </form>
+            <form action="/renamedir" method="post" style="display:inline">
+                <input type="text" name="newDirname" placeholder="New name">
+                <input type="hidden" name="oldDirname" value="{{.Name}}">
+                <button type="submit">Rename Directory</button>
+            </form>
+            {{end}}
+        </li>
+        {{end}}
+    </ul>
+</body>
+</html>
