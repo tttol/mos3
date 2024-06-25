@@ -8,7 +8,7 @@ import (
 func LogRequestHeaders(r *http.Request) {
 	for name, headers := range r.Header {
 		for _, h := range headers {
-			slog.Info("%v: %v", name, h)
+			slog.Info("[Request Header]", name, h)
 		}
 	}
 }
