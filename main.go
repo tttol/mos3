@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/tttol/mos3/logging"
 )
 
 const uploadDir = "./uploads"
@@ -25,8 +27,7 @@ func main() {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-
-	logRequestHeaders(r)
+	logging.LogRequestHeaders(r)
 	files, err := os.ReadDir(uploadDir)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
