@@ -16,7 +16,7 @@ import (
 const uploadDir = "./upload"
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	slog.Info("IndexHandler is called.", "method", r.Method, "url", r.URL.Path)
+	slog.Info("IndexHandler is called.")
 	logging.LogRequest(r)
 
 	userAgent := r.Header.Get("User-Agent")

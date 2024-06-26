@@ -8,7 +8,7 @@ import (
 )
 
 func LogRequest(r *http.Request) {
-	slog.Info("[Request URL]", "url", r.URL.String())
+	slog.Info("[Request URL&method]", "url", r.URL.String(), "method", r.Method)
 	for name, headers := range r.Header {
 		for _, h := range headers {
 			slog.Info("[Request Header]", name, h)

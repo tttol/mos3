@@ -9,8 +9,8 @@ import (
 
 func Cp(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Executing `aws s3 cp`")
-	// filePath := r.URL.Path
-	filePath := "../../upload/hoge/aaa.txt"
+	filePath := fmt.Sprintf("upload%s", r.URL.Path) // main.goを実行しているディレクトリからの相対パス
+	slog.Info("Checking file path", "filePath", filePath)
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		// HTTP 404
 		slog.Error("File not found.", "filePath", filePath)
@@ -18,12 +18,16 @@ func Cp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method != http.MethodHead {
-		// HTTP 405
-		slog.Error("Method not allowed", "method", r.Method)
-		http.Error(w, fmt.Sprintf("Method %s not allowed. Only HEAD is allowed. ", r.Method), http.StatusMethodNotAllowed)
-	}
+	// TODO HTTP method check
+
+	// if r.Method != http.MethodHead {
+	// 	// HTTP 405
+	// 	slog.Error("Method not allowed", "method", r.Method)
+	// 	http.Error(w, fmt.Sprintf("Method %s not allowed. Only HEAD is allowed. ", r.Method), http.StatusMethodNotAllowed)
+	// 	return
+	// }
 
 	// download file
+	slog.Info("Serving file", "filePath", filePath)
 	http.ServeFile(w, r, filePath)
 }
