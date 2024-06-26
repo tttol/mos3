@@ -16,12 +16,15 @@ import (
 const uploadDir = "./upload"
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("IndexHandler is called.", "method", r.Method, "url", r.URL.Path)
 	logging.LogRequest(r)
 
 	userAgent := r.Header.Get("User-Agent")
 	if strings.Contains(userAgent, "command/s3.ls") {
 		s3.Ls(w)
 		return
+	} else if strings.Contains(userAgent, "command/s3.cp") {
+		s3.Cp(w, r)
 	}
 
 	files, err := os.ReadDir(uploadDir)
