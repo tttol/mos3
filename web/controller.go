@@ -9,8 +9,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/tttol/mos3/core/aws"
 	"github.com/tttol/mos3/core/logging"
+	"github.com/tttol/mos3/core/s3"
 )
 
 const uploadDir = "./upload"
@@ -20,7 +20,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	userAgent := r.Header.Get("User-Agent")
 	if strings.Contains(userAgent, "command/s3.ls") {
-		aws.Exec(w)
+		s3.Ls(w)
 		return
 	}
 

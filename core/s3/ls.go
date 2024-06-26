@@ -1,4 +1,4 @@
-package aws
+package s3
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func Exec(w http.ResponseWriter) {
+func Ls(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/xml")
 	w.Header().Set("Date", time.Now().Format(time.RFC1123))
 	w.Header().Set("Server", "MOS3")
