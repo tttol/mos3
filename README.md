@@ -7,10 +7,14 @@ TBD
 # TBD
 - SDKからのリクエストを受け付ける
   - **DL**
+    - listObjectsV2
+    - getObject
   - **Upload**
+    - putObject
+  - cp
+    - copyObject
   - rm
-  - mv
-  - rename
+    - deleteObject
 - CLIからのリクエストを受け付ける
   - ls
   - cp
