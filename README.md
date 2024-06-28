@@ -5,20 +5,20 @@ TBD
 # Usage
 TBD
 # TBD
-- SDKからのリクエストを受け付ける
-  - **DL**
-    - listObjectsV2
-    - getObject
+- AWS SDK for Javaからのリクエストを受け付ける（優先度：高）
+  - **DL** 
+    - [ ] listObjectsV2
+    - [x] getObject
   - **Upload**
-    - putObject
+    - [ ] putObject
   - cp
-    - copyObject
+    - [ ] copyObject
   - rm
-    - deleteObject
-- CLIからのリクエストを受け付ける
-  - ls
-  - cp
-  - rm
-  - mv
+    - [ ] deleteObject
+- CLIからのリクエストを受け付ける(優先度：低)
+  - [x] ls
+  - [x] cp
+  - [ ] rm
+  - [ ] mv
 - Web GUI
-  - TailwindCSSをつかう？
+  - TailwindCSS？
