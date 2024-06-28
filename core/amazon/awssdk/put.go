@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 )
 
@@ -33,51 +32,37 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	reader := bufio.NewReader(r.Body)
-	for {
-		// Read the chunk size
-		chunkSizeStr, err := reader.ReadString('\n')
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			http.Error(w, "Failed to read chunk size", http.StatusInternalServerError)
-			return
-		}
-
-		// Parse the chunk size
-		chunkSizeStr = strings.TrimSpace(chunkSizeStr)
-		chunkSize, err := strconv.ParseInt(chunkSizeStr, 16, 64)
-		if err != nil {
-			http.Error(w, "Invalid chunk size", http.StatusInternalServerError)
-			return
-		}
-
-		if chunkSize == 0 {
-			// End of chunks
-			break
-		}
-
-		// Read the chunk data
-		chunkData := make([]byte, chunkSize)
-		if _, err := io.ReadFull(reader, chunkData); err != nil {
-			http.Error(w, "Failed to read chunk data", http.StatusInternalServerError)
-			return
-		}
-
-		// Skip the chunk signature
-		if _, err := reader.ReadString('\n'); err != nil {
-			http.Error(w, "Failed to read chunk signature", http.StatusInternalServerError)
-			return
-		}
-
-		// Write the data to the file
-		if _, err := file.Write(chunkData); err != nil {
-			http.Error(w, "Failed to write to file", http.StatusInternalServerError)
-			return
-		}
-	}
+	write(r.Body, file, w)
 
 	slog.Info("File saved to " + savePath)
 	w.Write([]byte("File uploaded successfully"))
+}
+
+func write(data io.ReadCloser, file *os.File, w http.ResponseWriter) {
+	reader := bufio.NewReader(data)
+	for {
+		chunk, err := reader.ReadString('\n')
+		if err != nil {
+			if err == io.EOF {
+				slog.Info("End of file.")
+				break
+			}
+			slog.Error("Failed to read chunk", "error", err)
+			http.Error(w, "Failed to read chunk", http.StatusInternalServerError)
+			return
+		}
+		slog.Info("Reading chunk...", "chunk", chunk)
+
+		if strings.Contains(chunk, "chunk-signature=") {
+			slog.Info("Skipping chunk signature... " + chunk)
+			continue
+		}
+
+		if _, err := file.Write([]byte(chunk)); err != nil {
+			slog.Error("Failed to write to file", "error", err)
+			http.Error(w, "Failed to write to file", http.StatusInternalServerError)
+			return
+		}
+		slog.Info("Write to file...", "chunk", chunk)
+	}
 }
