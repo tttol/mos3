@@ -9,8 +9,9 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/tttol/mos3/core/amazon/awscli"
+	"github.com/tttol/mos3/core/amazon/awssdk"
 	"github.com/tttol/mos3/core/logging"
-	"github.com/tttol/mos3/core/s3"
 )
 
 const uploadDir = "./upload"
@@ -19,12 +20,20 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("IndexHandler is called.")
 	logging.LogRequest(r)
 
+	// AWS CLI request
 	userAgent := r.Header.Get("User-Agent")
 	if strings.Contains(userAgent, "command/s3.ls") {
-		s3.Ls(w)
+		awscli.Ls(w)
 		return
 	} else if strings.Contains(userAgent, "command/s3.cp") {
-		s3.Cp(w, r)
+		awscli.Cp(w, r)
+	}
+
+	// AWS SDK request
+	if strings.Contains(userAgent, "aws-sdk") && r.Method == "PUT" {
+		awssdk.Put(w, r)
+	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "POST" {
+		// delete
 	}
 
 	files, err := os.ReadDir(uploadDir)
