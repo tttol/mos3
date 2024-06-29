@@ -30,16 +30,22 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// AWS SDK request
-	if strings.Contains(userAgent, "aws-sdk") && r.Method == "GET" {
-		awssdk.Get(w, r)
-		return
-	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "PUT" {
-		awssdk.Put(w, r)
-		return
-	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "POST" && r.URL.Query().Get("delete") == "" {
-		awssdk.Delete(w, r)
-		return
-	}
+	if strings.Contains(userAgent, "aws-sdk") {
+		if r.Method == "GET" {
+			awssdk.Get(w, r)
+			return
+		} else if r.Method == "PUT" {
+			if r.ContentLength > 0 {
+				awssdk.Put(w, r)
+			} else {
+				awssdk.Copy(w, r)
+			}
+			return
+		} else if r.Method == "POST" && r.URL.Query().Get("delete") == "" {
+			awssdk.Delete(w, r)
+			return
+		}
+	} 
 
 	files, err := os.ReadDir(uploadDir)
 	if err != nil {
