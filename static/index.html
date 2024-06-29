@@ -6,44 +6,45 @@
     <title>MOS3 - My Own S3</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg">
-    <p class="text-2xl">MOS3</p>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">Upload</button>
-    </form>
-
-    <form action="/mkdir" method="post">
-        <input type="text" name="dirname" placeholder="Directory name">
-        <button type="submit">Create Directory</button>
-    </form>
-
-    <h2>Files</h2>
-    <ul>
-        {{range .}}
-        <li>{{.Name}}
-            <form action="/delete" method="post" style="display:inline">
-                <input type="hidden" name="filename" value="{{.Name}}">
-                <button type="submit">Delete</button>
-            </form>
-            <form action="/rename" method="post" style="display:inline">
-                <input type="text" name="newFilename" placeholder="New name">
-                <input type="hidden" name="oldFilename" value="{{.Name}}">
-                <button type="submit">Rename</button>
-            </form>
-            {{if .IsDir}}
-            <form action="/rmdir" method="post" style="display:inline">
-                <input type="hidden" name="dirname" value="{{.Name}}">
-                <button type="submit">Delete Directory</button>
-            </form>
-            <form action="/renamedir" method="post" style="display:inline">
-                <input type="text" name="newDirname" placeholder="New name">
-                <input type="hidden" name="oldDirname" value="{{.Name}}">
-                <button type="submit">Rename Directory</button>
-            </form>
+<body class="bg-emerald-950 text-white">
+    <header class="bg-emerald-600 text-white p-4 text-center font-black text-4xl">MOS3</header>
+    <main class="p-3">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button type="submit">Upload</button>
+        </form>
+    
+        <form action="/mkdir" method="post">
+            <input type="text" name="dirname" placeholder="Directory name">
+            <button type="submit">Create Directory</button>
+        </form>
+    
+        <ul>
+            {{range .}}
+            <li>{{.Name}}
+                <form action="/delete" method="post" style="display:inline">
+                    <input type="hidden" name="filename" value="{{.Name}}">
+                    <button type="submit">Delete</button>
+                </form>
+                <form action="/rename" method="post" style="display:inline">
+                    <input type="text" name="newFilename" placeholder="New name">
+                    <input type="hidden" name="oldFilename" value="{{.Name}}">
+                    <button type="submit">Rename</button>
+                </form>
+                {{if .IsDir}}
+                <form action="/rmdir" method="post" style="display:inline">
+                    <input type="hidden" name="dirname" value="{{.Name}}">
+                    <button type="submit">Delete Directory</button>
+                </form>
+                <form action="/renamedir" method="post" style="display:inline">
+                    <input type="text" name="newDirname" placeholder="New name">
+                    <input type="hidden" name="oldDirname" value="{{.Name}}">
+                    <button type="submit">Rename Directory</button>
+                </form>
+                {{end}}
+            </li>
             {{end}}
-        </li>
-        {{end}}
-    </ul>
+        </ul>
+    </main>
 </body>
 </html>
