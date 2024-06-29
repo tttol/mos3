@@ -32,7 +32,11 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	// AWS SDK request
 	if strings.Contains(userAgent, "aws-sdk") {
 		if r.Method == "GET" {
-			awssdk.Get(w, r)
+			if r.URL.Query().Get("list-type") == "2" {
+				awssdk.ListObjectsV2(w, r)
+			} else {
+				awssdk.Get(w, r)
+			}
 			return
 		} else if r.Method == "PUT" {
 			if r.ContentLength > 0 {

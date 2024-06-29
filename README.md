@@ -12,7 +12,7 @@ TBD
   - **Upload**
     - [x] putObject
   - cp
-    - [ ] copyObject
+    - [x] copyObject
   - rm
     - [x] deleteObject
 - Accept requests from CLI (Priority: Low)
