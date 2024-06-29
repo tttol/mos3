@@ -56,7 +56,7 @@ func write(data io.ReadCloser, file *os.File, w http.ResponseWriter) {
 		slog.Info("Reading chunk...", "chunk", chunk)
 
 		if strings.Contains(chunk, "chunk-signature=") {
-			slog.Info("Skipping chunk signature... " + chunk)
+			slog.Info("Skipping `chunk-signature`... " + chunk)
 			continue
 		}
 
