@@ -7,7 +7,7 @@ TBD
 # TBD
 - Accept requests from AWS SDK for Java (Priority: High)
   - **DL** 
-    - [ ] listObjectsV2
+    - [x] listObjectsV2
     - [x] getObject
   - **Upload**
     - [x] putObject
