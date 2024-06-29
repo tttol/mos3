@@ -20,13 +20,14 @@
         </form>
 
         <div class="p-3 bg-emerald-800 rounded-xl">
-            <div className="border-b-2 border-slate-400 mb-5">{{range .}}
+            {{range .}}
+            <div class="border-b-2 border-slate-400 py-3">
                 <p>
-                    <span className="pl-2 mr-2">icon</span>
-                    <span className="font-bold">{detail.name}</span>
+                    <span class="pl-2 mr-2">icon</span>
+                    <span class="">{detail.name}</span>
                 </p>
+                </div>
             {{end}}
-            </div>
         </div>
     
         <ul>
