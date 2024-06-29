@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// Handle GET requests from AWS SDK
 func Get(w http.ResponseWriter, r *http.Request) {
 	slog.Info("awssdk.Get is called.")
 	if r.URL.Path == "" || r.URL.Path == "/" {

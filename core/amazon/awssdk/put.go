@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// Handle PUT requests from AWS SDK
 func Put(w http.ResponseWriter, r *http.Request) {
 	slog.Info("awssdk.Put is called.")
 	filePath := r.URL.Path
@@ -38,6 +39,7 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("File uploaded successfully"))
 }
 
+// Write data to target file
 func write(data io.ReadCloser, file *os.File, w http.ResponseWriter) {
 	reader := bufio.NewReader(data)
 	for {
