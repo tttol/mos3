@@ -49,7 +49,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			awssdk.Delete(w, r)
 			return
 		}
-	} 
+	}
 
 	files, err := os.ReadDir(uploadDir)
 	if err != nil {
