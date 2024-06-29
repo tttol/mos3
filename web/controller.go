@@ -36,8 +36,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "PUT" {
 		awssdk.Put(w, r)
 		return
-	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "POST" {
-		// delete
+	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "POST" && r.URL.Query().Get("delete") == "" {
+		awssdk.Delete(w, r)
 		return
 	}
 

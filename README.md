@@ -14,7 +14,7 @@ TBD
   - cp
     - [ ] copyObject
   - rm
-    - [ ] deleteObject
+    - [x] deleteObject
 - Accept requests from CLI (Priority: Low)
   - [x] ls
   - [x] cp
