@@ -9,7 +9,7 @@ import (
 
 func Cp(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Executing `aws s3 cp`")
-	filePath := fmt.Sprintf("upload%s", r.URL.Path) // main.goを実行しているディレクトリからの相対パス
+	filePath := fmt.Sprintf("upload%s", r.URL.Path) // Relative path from the directory where main.go is executed
 	slog.Info("Checking file path", "filePath", filePath)
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		// HTTP 404

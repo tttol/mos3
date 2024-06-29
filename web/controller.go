@@ -30,10 +30,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// AWS SDK request
-	if strings.Contains(userAgent, "aws-sdk") && r.Method == "PUT" {
+	if strings.Contains(userAgent, "aws-sdk") && r.Method == "GET" {
+		awssdk.Get(w, r)
+		return
+	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "PUT" {
 		awssdk.Put(w, r)
+		return
 	} else if strings.Contains(userAgent, "aws-sdk") && r.Method == "POST" {
 		// delete
+		return
 	}
 
 	files, err := os.ReadDir(uploadDir)

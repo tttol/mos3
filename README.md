@@ -8,9 +8,9 @@ TBD
 - AWS SDK for Javaからのリクエストを受け付ける（優先度：高）
   - **DL** 
     - [ ] listObjectsV2
-    - [x] getObject
+    - [ ] getObject
   - **Upload**
-    - [ ] putObject
+    - [x] putObject
   - cp
     - [ ] copyObject
   - rm
