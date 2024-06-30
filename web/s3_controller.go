@@ -3,18 +3,12 @@ package web
 import (
 	"log/slog"
 	"net/http"
-	"os"
-	"path/filepath"
 	"text/template"
+
+	"github.com/tttol/mos3/core/util"
 )
 
 const uploadDir = "./upload"
-
-type S3Object struct {
-	FullPath string
-	Name     string
-	IsDir    bool
-}
 
 func S3Handler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("S3Handler is called.")
@@ -24,23 +18,12 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	dirEntry, err := os.ReadDir(filepath.Join(uploadDir, path))
+	s3Objects, err := util.GetS3Objects(r, path)
 	if err != nil {
+		slog.Error("GetS3Objects error", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	var s3Objects []S3Object
-	for _, entry := range dirEntry {
-		var obj S3Object
-		obj.Name = entry.Name()
-		obj.FullPath = filepath.Join(r.URL.Path, entry.Name())
-		obj.IsDir = entry.IsDir()
-		slog.Info("S3Object", "data", obj)
-
-		s3Objects = append(s3Objects, obj)
-	}
-	slog.Info("S3Objects", "data", s3Objects)
 
 	tmpl, err := template.ParseFiles("static/index.html")
 	if err != nil {
