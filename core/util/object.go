@@ -9,7 +9,7 @@ import (
 	"github.com/tttol/mos3/core/model"
 )
 
-func GetS3Objects(r *http.Request, path string) ([]model.S3Object, error) {
+func GenerateS3Objects(r *http.Request, path string) ([]model.S3Object, error) {
 	dirEntry, err := os.ReadDir(filepath.Join("./upload", path))
 	if err != nil {
 		slog.Error("ReadDir error", "error", err)
