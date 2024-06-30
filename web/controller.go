@@ -7,14 +7,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"text/template"
 
 	"github.com/tttol/mos3/core/amazon/awscli"
 	"github.com/tttol/mos3/core/amazon/awssdk"
 	"github.com/tttol/mos3/core/logging"
 )
 
-const uploadDir = "./upload"
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("IndexHandler is called.")
@@ -50,29 +48,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-}
-
-func S3Handler(w http.ResponseWriter, r *http.Request) {
-	slog.Info("S3Handler is called.")
-	path := r.URL.Path[len("/s3/"):]
-	files, err := os.ReadDir(filepath.Join(uploadDir, path))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if r.URL.Query().Get("ation") == "dl" {
-		slog.Info("Download file", "path", path)
-	}
-
-	tmpl, err := template.ParseFiles("static/index.html")
-	if err != nil {
-		slog.Error("template file error", "error", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	tmpl.Execute(w, files)
 }
 
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
