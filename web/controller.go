@@ -50,11 +50,19 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
 
-	files, err := os.ReadDir(uploadDir)
+func S3Handler(w http.ResponseWriter, r *http.Request) {
+	slog.Info("S3Handler is called.")
+	path := r.URL.Path[len("/s3/"):]
+	files, err := os.ReadDir(filepath.Join(uploadDir, path))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+	}
+
+	if r.URL.Query().Get("ation") == "dl" {
+		slog.Info("Download file", "path", path)
 	}
 
 	tmpl, err := template.ParseFiles("static/index.html")
