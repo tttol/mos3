@@ -11,27 +11,26 @@ func TestGenerateBreadcrumbs(t *testing.T) {
 		expected map[string]interface{}
 	}{
 		{
-			input: "/s3/fuga/fugafuga/aaa.txt",
+			input: "/fuga/fugafuga/aaa.txt",
 			expected: map[string]interface{}{
-				"s3":       "/s3",
 				"fuga":     "/s3/fuga",
 				"fugafuga": "/s3/fuga/fugafuga",
 				"aaa.txt":  "/s3/fuga/fugafuga/aaa.txt?action=dl",
 			},
 		},
 		{
-			input: "/s3/hoge/fuga/piyo",
+			input: "/hoge/fuga/piyo",
 			expected: map[string]interface{}{
-				"s3":   "/s3",
 				"hoge": "/s3/hoge",
 				"fuga": "/s3/hoge/fuga",
 				"piyo": "/s3/hoge/fuga/piyo",
 			},
 		},
 		{
-			input: "/single",
+			input: "/s3/hoge",
 			expected: map[string]interface{}{
-				"single": "/single",
+				"s3":   "/s3/s3",
+				"hoge": "/s3/s3/hoge",
 			},
 		},
 	}
