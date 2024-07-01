@@ -8,7 +8,9 @@ import (
 	"github.com/tttol/mos3/core/util"
 )
 
-const uploadDir = "./upload"
+const (
+	UPLOAD_DIR = "./upload"
+)
 
 func S3Handler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("S3Handler is called.")
@@ -18,7 +20,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	s3Objects, err := util.GenerateS3Objects(r, path)
+	s3Objects, err := util.GenerateS3Objects(r, UPLOAD_DIR, path)
 	if err != nil {
 		slog.Error("GetS3Objects error", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

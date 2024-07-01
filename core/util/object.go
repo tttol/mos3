@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"github.com/tttol/mos3/core/model"
 )
 
-func GenerateS3Objects(r *http.Request, path string) ([]model.S3Object, error) {
-	dirEntry, err := os.ReadDir(filepath.Join("./upload", path))
+func GenerateS3Objects(r *http.Request, dir string, path string) ([]model.S3Object, error) {
+	dirEntry, err := os.ReadDir(filepath.Join(dir, path))
 	if err != nil {
 		slog.Error("ReadDir error", "error", err)
 		return nil, err
@@ -25,6 +26,19 @@ func GenerateS3Objects(r *http.Request, path string) ([]model.S3Object, error) {
 
 		s3Objects = append(s3Objects, obj)
 	}
+	sorted := sortObjects(s3Objects)
 
-	return s3Objects, nil
+	return sorted, nil
+}
+
+func sortObjects(s3Objects []model.S3Object) []model.S3Object {
+	sort.Slice(s3Objects, func(i, j int) bool {
+		// sort by IsDir asc
+		if s3Objects[i].IsDir != s3Objects[j].IsDir {
+			return s3Objects[i].IsDir
+		}
+		// sort by Name asc
+		return s3Objects[i].Name < s3Objects[j].Name
+	})
+	return s3Objects
 }
