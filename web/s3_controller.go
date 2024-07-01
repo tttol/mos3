@@ -8,10 +8,6 @@ import (
 	"github.com/tttol/mos3/core/util"
 )
 
-const (
-	UPLOAD_DIR = "./upload"
-)
-
 func S3Handler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("S3Handler is called.")
 	path := r.URL.Path[len("/s3/"):]

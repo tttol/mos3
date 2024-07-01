@@ -13,7 +13,6 @@ import (
 	"github.com/tttol/mos3/core/logging"
 )
 
-
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("IndexHandler is called.")
 	logging.LogRequest(r)
@@ -63,7 +62,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	dst, err := os.Create(filepath.Join(uploadDir, header.Filename))
+	dst, err := os.Create(filepath.Join(UPLOAD_DIR, header.Filename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -85,7 +84,7 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filename := r.FormValue("filename")
-	err := os.Remove(filepath.Join(uploadDir, filename))
+	err := os.Remove(filepath.Join(UPLOAD_DIR, filename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -102,7 +101,7 @@ func RenameHandler(w http.ResponseWriter, r *http.Request) {
 
 	oldFilename := r.FormValue("oldFilename")
 	newFilename := r.FormValue("newFilename")
-	err := os.Rename(filepath.Join(uploadDir, oldFilename), filepath.Join(uploadDir, newFilename))
+	err := os.Rename(filepath.Join(UPLOAD_DIR, oldFilename), filepath.Join(UPLOAD_DIR, newFilename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -118,7 +117,7 @@ func MkdirHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dirname := r.FormValue("dirname")
-	err := os.Mkdir(filepath.Join(uploadDir, dirname), os.ModePerm)
+	err := os.Mkdir(filepath.Join(UPLOAD_DIR, dirname), os.ModePerm)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -134,7 +133,7 @@ func RmdirHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dirname := r.FormValue("dirname")
-	err := os.Remove(filepath.Join(uploadDir, dirname))
+	err := os.Remove(filepath.Join(UPLOAD_DIR, dirname))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -151,7 +150,7 @@ func RenamedirHandler(w http.ResponseWriter, r *http.Request) {
 
 	oldDirname := r.FormValue("oldDirname")
 	newDirname := r.FormValue("newDirname")
-	err := os.Rename(filepath.Join(uploadDir, oldDirname), filepath.Join(uploadDir, newDirname))
+	err := os.Rename(filepath.Join(UPLOAD_DIR, oldDirname), filepath.Join(UPLOAD_DIR, newDirname))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
