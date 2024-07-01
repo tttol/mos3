@@ -1,11 +1,8 @@
 package web
 
 import (
-	"io"
 	"log/slog"
 	"net/http"
-	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/tttol/mos3/core/amazon/awscli"
@@ -13,7 +10,7 @@ import (
 	"github.com/tttol/mos3/core/logging"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
+func CliSdkHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("IndexHandler is called.")
 	logging.LogRequest(r)
 
@@ -47,114 +44,4 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-}
-
-func UploadHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	file, header, err := r.FormFile("file")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer file.Close()
-
-	dst, err := os.Create(filepath.Join(UPLOAD_DIR, header.Filename))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer dst.Close()
-
-	if _, err := io.Copy(dst, file); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func DeleteHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	filename := r.FormValue("filename")
-	err := os.Remove(filepath.Join(UPLOAD_DIR, filename))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func RenameHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	oldFilename := r.FormValue("oldFilename")
-	newFilename := r.FormValue("newFilename")
-	err := os.Rename(filepath.Join(UPLOAD_DIR, oldFilename), filepath.Join(UPLOAD_DIR, newFilename))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func MkdirHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	dirname := r.FormValue("dirname")
-	err := os.Mkdir(filepath.Join(UPLOAD_DIR, dirname), os.ModePerm)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func RmdirHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	dirname := r.FormValue("dirname")
-	err := os.Remove(filepath.Join(UPLOAD_DIR, dirname))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-
-func RenamedirHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	oldDirname := r.FormValue("oldDirname")
-	newDirname := r.FormValue("newDirname")
-	err := os.Rename(filepath.Join(UPLOAD_DIR, oldDirname), filepath.Join(UPLOAD_DIR, newDirname))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
 }
