@@ -27,7 +27,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 
 	dataMap := map[string]interface{}{
 		"S3Objects":   s3Objects,
-		"breadcrumbs": "Some additional data",
+		"Breadcrumbs": util.GenerateBreadcrumbs(path),
 	}
 
 	tmpl, err := template.ParseFiles("static/index.html")
@@ -37,6 +37,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	slog.Info("dataMap", "dataMap", dataMap)
 	tmpl.Execute(w, dataMap)
 }
 func download(path string) {

@@ -22,11 +22,9 @@ func GenerateS3Objects(r *http.Request, path string) ([]model.S3Object, error) {
 		obj.Name = entry.Name()
 		obj.FullPath = filepath.Join(r.URL.Path, entry.Name())
 		obj.IsDir = entry.IsDir()
-		slog.Info("S3Object", "data", obj)
 
 		s3Objects = append(s3Objects, obj)
 	}
-	slog.Info("S3Objects", "data", s3Objects)
 
 	return s3Objects, nil
 }

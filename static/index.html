@@ -17,11 +17,9 @@
         <div class="mx-auto w-3/4 p-3 bg-emerald-800 rounded-xl">
             <div class="flex justify-between">
                 <div class="text-lg">
-                    <a href="/s3" class="text-cyan-400 underline-offset-2 hover:opacity-60">s3://</a>
-                    {{range .}}
-                        {{if .IsDir}}
-                        <span> / <a href="{{.FullPath}}" class="text-cyan-400 underline-offset-2 hover:opacity-60">{{.Name}}</a></span>
-                        {{end}}
+                    <a href="/s3" class="text-cyan-400 underline-offset-2 hover:opacity-60">s3:</a>
+                    {{range $key, $value := .Breadcrumbs}}
+                        <span> / <a href="{{$value}}" class="text-cyan-400 underline-offset-2 hover:opacity-60">{{$key}}</a></span>
                     {{end}}
                 </div>
                 <div id="upload" class="inline-block bg-blue-500 text-white w-auto font-bold py-2 px-2 rounded-full mb-3 hover:opacity-60">

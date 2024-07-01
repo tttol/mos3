@@ -8,7 +8,7 @@ import (
 func GenerateBreadcrumbs(path string) map[string]interface{} {
 	breadcrumbs := make(map[string]interface{})
 	parts := strings.Split(path, "/")
-	fullPath := ""
+	fullPath := "/s3"
 	for i, part := range parts {
 		if part == "" {
 			continue
