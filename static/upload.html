@@ -10,10 +10,20 @@
     <header class="bg-emerald-400 text-white p-4 text-center font-black text-4xl"><a href="/s3">MOS3</a></header>
     <main class="p-3">    
         <div class="mx-auto w-3/4 p-3 bg-emerald-800 rounded-xl">
-            <div class="flex justify-between">
-                <form id="uploadForm" class="inline" action="/upload" method="post" enctype="multipart/form-data">
+            <p class="text-3xl mb-5">Upload file</p>
+            <p>Add a file. The file will be uploaded to {{.CurrentPath}}</p>
+            <div>
+                <form id="uploadForm" class="flex justify-between" action="/upload" method="post" enctype="multipart/form-data">
                     <input id="uploadFile" type="file" name="file">
                     <input type="hidden" name="currentPath" value="{{.CurrentPath}}">
+                    <div id="upload" class="bg-blue-500 text-white font-bold px-3 py-2 rounded-full mb-3 hover:opacity-60 inline-block">
+                        <a href="javascript:document.querySelector('#uploadForm').submit();">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                            </svg>                              
+                            upload
+                        </a>
+                    </div>
                 </form>            
             </div>
         </div>

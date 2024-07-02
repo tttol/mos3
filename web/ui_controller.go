@@ -25,10 +25,17 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var currentPath string
+	if path == "" {
+		currentPath = "/"
+	} else {
+		currentPath = path
+	}
+
 	dataMap := map[string]interface{}{
 		"S3Objects":   s3Objects,
 		"Breadcrumbs": util.GenerateBreadcrumbs(path),
-		"CurrentPath": path,
+		"CurrentPath": currentPath,
 	}
 
 	tmpl, err := template.ParseFiles("static/index.html")

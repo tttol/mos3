@@ -17,8 +17,12 @@ func UploadIndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl.Execute(w, nil)
+	dataMap := map[string]interface{}{
+		"CurrentPath": r.URL.Query().Get("currentPath"),
+	}
+	tmpl.Execute(w, dataMap)
 }
+
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
@@ -45,5 +49,5 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/", http.StatusFound)
+	http.Redirect(w, r, filepath.Join("/s3", path), http.StatusFound)
 }
