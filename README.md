@@ -1,7 +1,10 @@
 # MOS3
 `MOS3` is a mock application for Amazon S3, meaning `My Own S3`, pronounced `mɒsˈθri`.
 # Install
-TBD
+
+```bash
+docker run -p 3333:3333 -v ./up:/app/upload -it --rm mos3
+```
 # Usage
 TBD
 # TBD
