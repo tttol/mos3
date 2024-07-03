@@ -1,4 +1,5 @@
-# MOS3
+# MOS3 - My Own S3
+![GitHub](https://img.shields.io/github/license/tttol/mos3) ![GitHub](https://img.shields.io/github/v/release/tttol/mos3)   
 `MOS3` is a mock application for Amazon S3, meaning `My Own S3`, pronounced `mɒsˈθri`.
 # Install
 ## Docker
