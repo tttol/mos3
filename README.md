@@ -16,7 +16,7 @@ version: '3.8'
 
 services:
   mos3:
-    image: tttol:mos3
+    image: tttol/mos3:latest
     ports:
       - "3333:3333"
     volumes:
