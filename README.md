@@ -10,19 +10,7 @@ docker run -p 3333:3333 -v ./upload:/app/upload -it --rm tttol/mos3:latest
 Then acccess http://localhost:3333/s3 .
 
 ## Docker Compose
-Here is compose.yml.
-```yml:compose.yml
-version: '3.8'
-
-services:
-  mos3:
-    image: tttol/mos3:latest
-    ports:
-      - "3333:3333"
-    volumes:
-      - ./upload:/app/upload
-```
-
+compose.yml is [here](https://github.com/tttol/mos3/blob/main/compose.yml).  
 Run command.
 ```bash
 docker compose up -d
