@@ -3,8 +3,9 @@
 # Install
 
 ```bash
-docker run -p 3333:3333 -v ./up:/app/upload -it --rm mos3
+docker run -p 3333:3333 -v ./up:/app/upload -it --rm tttol:mos3
 ```
+Then acccess http://localhost:3333/s3 .
 # Usage
 TBD
 # TBD
