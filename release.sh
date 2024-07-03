@@ -1,5 +1,5 @@
 if [ $# != 1 ]; then
-    echo "引数にはアプリバージョン(X.X)を指定してください"
+    echo "Please specify the app version (X.X) as the argument."
     echo "example: ./release.sh 1.0"
     exit 1
 fi
