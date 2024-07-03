@@ -5,7 +5,7 @@
 Run command.
 ```bash
 # https://hub.docker.com/r/tttol/mos3
-docker run -p 3333:3333 -v ./upload:/app/upload -it --rm tttol:mos3
+docker run -p 3333:3333 -v ./upload:/app/upload -it --rm tttol/mos3:latest
 ```
 Then acccess http://localhost:3333/s3 .
 
