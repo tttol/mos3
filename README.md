@@ -34,12 +34,11 @@ Then access http://localhost:3333/s3.
 
 # Usage
 ## Upload file/directory manually
-You can upload files using the "New File" button at the top right of the screen.  
-To upload directories, create them in the directory mounted to `/app/upload` using commands like `mkdir`.
+You can upload a file or a directory using the "New File" or "New Dir" button at the top right of the screen.  
+Alternatively, create them in the directory mounted to `/app/upload` using commands like `touch` or `mkdir`.
 
-![New File button](static/newfile.png)
-
-## Remove file/directory manually
+![New File/Dir button](static/new.png)
+## Remove file/directory manually (under development)
 The feature to delete files and directories from the web interface is currently under development.  
 For now, you can use commands like `rm` in the directory mounted to `/app/upload` to delete them.
 
