@@ -78,5 +78,3 @@ S3Client s3 = S3Client.builder()
   - [x] cp
   - [ ] rm
   - [ ] mv
-- Web GUI
-  - TailwindCSS?
