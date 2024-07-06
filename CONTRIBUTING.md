@@ -5,7 +5,7 @@ Please read through this document before submitting any issues or pull requests.
 
 ## Contributing via Pull Requests
 
-To send us a pull request, please:
+To send a pull request, please:
 
 1. Fork the repository.
 2. Modify the source code.
