@@ -15,9 +15,9 @@
             <div class="flex justify-between">
                 <div class="text-lg">
                     <a href="/s3" class="text-cyan-400 underline-offset-2 hover:opacity-60">s3:</a>
-                    {{range $key, $value := .Breadcrumbs}}
-                    <span> / <a href="{{$value}}"
-                            class="text-cyan-400 underline-offset-2 hover:opacity-60">{{$key}}</a></span>
+                    {{range .Breadcrumbs}}
+                    <span> / <a href="{{.Path}}"
+                            class="text-cyan-400 underline-offset-2 hover:opacity-60">{{.Name}}</a></span>
                     {{end}}
                 </div>
                 <div>
