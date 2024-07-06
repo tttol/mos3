@@ -10,6 +10,7 @@ import (
 func RemoveHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("RemoveHandler is called.")
 	if r.Method != "POST" {
+		slog.Error("Invalid request method", "method", r.Method)
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
