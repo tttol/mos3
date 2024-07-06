@@ -5,21 +5,26 @@ import (
 	"strings"
 )
 
-func GenerateBreadcrumbs(path string) map[string]interface{} {
-	breadcrumbs := make(map[string]interface{})
-	parts := strings.Split(path, "/")
+type Breadcrumb struct {
+	Name string
+	Path string
+}
+
+func GenerateBreadcrumbs(path string) []Breadcrumb {
+	var breadcrumbs []Breadcrumb
+	splitted := strings.Split(path, "/")
 	fullPath := "/s3"
-	for i, part := range parts {
-		if part == "" {
+	for i, s := range splitted {
+		if s == "" {
 			continue
 		}
-		fullPath += "/" + part
+		fullPath += "/" + s
 
 		r, _ := regexp.Compile(`.*\..*`)
-		if i == len(parts)-1 && r.Match([]byte(part)) {
-			breadcrumbs[part] = fullPath + "?action=dl"
+		if i == len(splitted)-1 && r.Match([]byte(s)) {
+			breadcrumbs = append(breadcrumbs, Breadcrumb{Name: s, Path: fullPath + "?action=dl"})
 		} else {
-			breadcrumbs[part] = fullPath
+			breadcrumbs = append(breadcrumbs, Breadcrumb{Name: s, Path: fullPath})
 		}
 	}
 	return breadcrumbs
