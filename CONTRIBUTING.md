@@ -11,7 +11,7 @@ To send a pull request, please:
 2. Modify the source code.
 3. Ensure local tests pass.
 4. Commit the changes to your fork.
-5. Send us a pull request.
+5. Send a pull request.
 
 ## Setting Up Your Local Development Environment
 
