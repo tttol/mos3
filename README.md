@@ -38,7 +38,7 @@ You can upload a file or a directory using the "New File" or "New Dir" button at
 Alternatively, you can create them in the directory mounted to `/app/upload` using commands like `touch` or `mkdir`.
 
 ![New File/Dir button](static/new.png)
-## Remove file/directory manually (under development)
+## Remove file/directory manually
 You can remove a file or directory using trash box icon at the right of each file/directory.
 Alternatively, you can use commands like `rm` in the directory mounted to `/app/upload` to delete them.
 
