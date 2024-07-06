@@ -62,7 +62,7 @@ S3Client s3 = S3Client.builder()
 > ```
 > When specifying `localhost` as the endpoint, you may need to enable path style access as shown above.
 
-# Contributing guidelines(TBD)
+# Contributing guidelines
 Thank you for your interest in contributing to our project. Please visit [CONTRIBUTING.md](https://github.com/tttol/mos3/blob/main/CONTRIBUTING.md) for additional information on contributing to this project.
 
 # TBD
