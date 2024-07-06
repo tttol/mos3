@@ -39,8 +39,8 @@ Alternatively, you can create them in the directory mounted to `/app/upload` usi
 
 ![New File/Dir button](static/new.png)
 ## Remove file/directory manually (under development)
-The feature to delete files and directories from the web interface is currently under development.  
-For now, you can use commands like `rm` in the directory mounted to `/app/upload` to delete them.
+You can remove a file or directory using trash box icon at the right of each file/directory.
+Alternatively, you can use commands like `rm` in the directory mounted to `/app/upload` to delete them.
 
 ## Connect your application with MOS3
 Here’s how to connect an application that uses Amazon S3 to MOS3.  
@@ -61,6 +61,9 @@ S3Client s3 = S3Client.builder()
 > .build();
 > ```
 > When specifying `localhost` as the endpoint, you may need to enable path style access as shown above.
+
+# Contributing guidelines(TBD)
+Thank you for your interest in contributing to our project. Please visit [CONTRIBUTING.md](https://github.com/tttol/mos3/blob/main/CONTRIBUTING.md) for additional information on contributing to this project.
 
 # TBD
 - Accept requests from AWS SDK for Java (Priority: High)
