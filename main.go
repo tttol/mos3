@@ -12,7 +12,7 @@ func main() {
 	http.HandleFunc("/s3/", web.S3Handler)
 	http.HandleFunc("/uploadpage", web.UploadIndexHandler)
 	http.HandleFunc("/upload", web.UploadHandler)
-	http.HandleFunc("/delete", web.DeleteHandler)
+	http.HandleFunc("/remove", web.RemoveHandler)
 	http.HandleFunc("/rename", web.RenameHandler)
 	http.HandleFunc("/mkdir", web.MkdirHandler)
 	http.HandleFunc("/rmdir", web.RmdirHandler)

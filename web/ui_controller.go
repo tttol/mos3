@@ -49,21 +49,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, dataMap)
 }
 
-func DeleteHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
 
-	filename := r.FormValue("filename")
-	err := os.Remove(filepath.Join(UPLOAD_DIR, filename))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	http.Redirect(w, r, "/", http.StatusFound)
-}
 
 func RenameHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
