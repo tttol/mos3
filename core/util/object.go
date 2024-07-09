@@ -10,8 +10,8 @@ import (
 	"github.com/tttol/mos3/core/model"
 )
 
-func GenerateS3Objects(r *http.Request, dir string, path string) ([]model.S3Object, error) {
-	dirEntry, err := os.ReadDir(filepath.Join(dir, path))
+func GenerateS3Objects(r *http.Request, dir string, dirPath string) ([]model.S3Object, error) {
+	dirEntry, err := os.ReadDir(filepath.Join(dir, dirPath))
 	if err != nil {
 		slog.Error("ReadDir error", "error", err)
 		return nil, err
