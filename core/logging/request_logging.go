@@ -16,7 +16,7 @@ func LogRequest(r *http.Request) {
 				// skip Authorization header
 				continue
 			}
-			slog.Info("[Request Header]", name, h)
+			slog.Debug("[Request Header]", name, h)
 		}
 	}
 
@@ -26,5 +26,5 @@ func LogRequest(r *http.Request) {
 		return
 	}
 	r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
-	slog.Info("[Request Body]" + string(bodyBytes))
+	slog.Debug("[Request Body]" + string(bodyBytes))
 }
