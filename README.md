@@ -3,8 +3,8 @@
 ![GitHub](https://img.shields.io/github/license/tttol/mos3) ![GitHub](https://img.shields.io/github/v/release/tttol/mos3)   
 `MOS3` is a mock application for Amazon S3, meaning `My Own S3`, pronounced `mɒsˈθri`.  
   
-- Description in English -> [Boost Your Development Efficiency! Simulate S3 with a Custom Amazon S3 Mock Application](https://dev.to/aws-builders/boost-your-development-efficiency-simulate-s3-with-a-custom-amazon-s3-mock-application-19ah)  
-- Description in Japanese -> [開発効率UP！Amazon S3のモックアプリを作ってS3をシミュレートする](https://zenn.dev/tttol/articles/13032ef69d8333)
+- 🌏Description(en) -> [Boost Your Development Efficiency! Simulate S3 with a Custom Amazon S3 Mock Application](https://dev.to/aws-builders/boost-your-development-efficiency-simulate-s3-with-a-custom-amazon-s3-mock-application-19ah)  
+- 🇯🇵Description(日本語) -> [開発効率UP！Amazon S3のモックアプリを作ってS3をシミュレートする](https://zenn.dev/tttol/articles/13032ef69d8333)
    
 ![screen image](static/mos3.png)
 
@@ -37,14 +37,17 @@ docker compose up -d
 Then access http://localhost:3333/s3.
 
 # Usage
-## Upload file/directory manually
+## Upload file/directory
 You can upload a file or a directory using the "New File" or "New Dir" button at the top right of the screen.  
 Alternatively, you can create them in the directory mounted to `/app/upload` using commands like `touch` or `mkdir`.
 
 ![New File/Dir button](static/new.png)
-## Remove file/directory manually
+## Remove file/directory
 You can remove a file or directory using trash box icon at the right of each file/directory.
 Alternatively, you can use commands like `rm` in the directory mounted to `/app/upload` to delete them.
+
+## Download file
+You can download a file. Click the filename, then start downloading.
 
 ## Connect your application with MOS3
 Here’s how to connect an application that uses Amazon S3 to MOS3.  
