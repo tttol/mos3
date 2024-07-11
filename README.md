@@ -3,8 +3,8 @@
 ![GitHub](https://img.shields.io/github/license/tttol/mos3) ![GitHub](https://img.shields.io/github/v/release/tttol/mos3)   
 `MOS3` is a mock application for Amazon S3, meaning `My Own S3`, pronounced `mɒsˈθri`.  
   
-- 🌏Description(en) -> [Boost Your Development Efficiency! Simulate S3 with a Custom Amazon S3 Mock Application](https://dev.to/aws-builders/boost-your-development-efficiency-simulate-s3-with-a-custom-amazon-s3-mock-application-19ah)  
-- 🇯🇵Description(日本語) -> [開発効率UP！Amazon S3のモックアプリを作ってS3をシミュレートする](https://zenn.dev/tttol/articles/13032ef69d8333)
+- Description(en) -> [Boost Your Development Efficiency! Simulate S3 with a Custom Amazon S3 Mock Application](https://dev.to/aws-builders/boost-your-development-efficiency-simulate-s3-with-a-custom-amazon-s3-mock-application-19ah)  
+- Description(日本語) -> [開発効率UP！Amazon S3のモックアプリを作ってS3をシミュレートする](https://zenn.dev/tttol/articles/13032ef69d8333)
    
 ![screen image](static/mos3.png)
 
