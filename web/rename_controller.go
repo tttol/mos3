@@ -14,7 +14,7 @@ func RenameHandler(w http.ResponseWriter, r *http.Request) {
 
 	oldFilename := r.FormValue("oldFilename")
 	newFilename := r.FormValue("newFilename")
-	err := os.Rename(filepath.Join(UPLOAD_DIR, oldFilename), filepath.Join(UPLOAD_DIR, newFilename))
+	err := os.Rename(filepath.Join(UPLOAD_DIR_PATH, oldFilename), filepath.Join(UPLOAD_DIR_PATH, newFilename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -31,7 +31,7 @@ func RenamedirHandler(w http.ResponseWriter, r *http.Request) {
 
 	oldDirname := r.FormValue("oldDirname")
 	newDirname := r.FormValue("newDirname")
-	err := os.Rename(filepath.Join(UPLOAD_DIR, oldDirname), filepath.Join(UPLOAD_DIR, newDirname))
+	err := os.Rename(filepath.Join(UPLOAD_DIR_PATH, oldDirname), filepath.Join(UPLOAD_DIR_PATH, newDirname))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

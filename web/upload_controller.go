@@ -37,7 +37,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	dst, err := os.Create(filepath.Join(UPLOAD_DIR, path, header.Filename))
+	dst, err := os.Create(filepath.Join(UPLOAD_DIR_PATH, path, header.Filename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

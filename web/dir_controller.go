@@ -15,7 +15,7 @@ func MkdirHandler(w http.ResponseWriter, r *http.Request) {
 
 	currentPath := r.FormValue("currentPath")
 	dirname := r.FormValue("dirname")
-	dir := filepath.Join(UPLOAD_DIR, currentPath, dirname)
+	dir := filepath.Join(UPLOAD_DIR_PATH, currentPath, dirname)
 	err := os.Mkdir(dir, os.ModePerm)
 	if err != nil {
 		slog.Error("failed to mkdir", "target directory", dir, "error", err)
@@ -34,7 +34,7 @@ func RmdirHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dirname := r.FormValue("dirname")
-	err := os.Remove(filepath.Join(UPLOAD_DIR, dirname))
+	err := os.Remove(filepath.Join(UPLOAD_DIR_PATH, dirname))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -16,7 +16,7 @@ func RemoveHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	path := r.FormValue("path")[len("/s3/"):]
-	err := os.Remove(filepath.Join(UPLOAD_DIR, path))
+	err := os.Remove(filepath.Join(UPLOAD_DIR_PATH, path))
 	if err != nil {
 		slog.Error("Failed to remove.", "error", err, "path", path)
 		http.Error(w, err.Error(), http.StatusInternalServerError)

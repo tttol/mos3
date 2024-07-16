@@ -16,7 +16,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("S3Handler is called.")
 	path := r.URL.Path[len("/s3/"):]
 
-	s3Objects, err := util.GenerateS3Objects(r, UPLOAD_DIR, GetDirPath(path))
+	s3Objects, err := util.GenerateS3Objects(r, UPLOAD_DIR_PATH, GetDirPath(path))
 	if err != nil {
 		slog.Error("GenerateS3Objects error", "error", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -59,7 +59,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 func download(w http.ResponseWriter, path string) (n int64, httpStatus int, err error) {
 	slog.Info("Start downloading file", "path", path)
 
-	file, err := os.Open(filepath.Join(UPLOAD_DIR, path))
+	file, err := os.Open(filepath.Join(UPLOAD_DIR_PATH, path))
 	if err != nil {
 		slog.Error("File open error", "error", err)
 		return 0, http.StatusNotFound, err

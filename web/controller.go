@@ -27,7 +27,7 @@ func CliSdkHandler(w http.ResponseWriter, r *http.Request) {
 	if strings.Contains(userAgent, "aws-sdk") {
 		if r.Method == "GET" {
 			if r.URL.Query().Get("list-type") == "2" {
-				awssdk.ListObjectsV2(w, r)
+				awssdk.ListObjectsV2(w, r, UPLOAD_DIR_NAME)
 			} else {
 				awssdk.Get(w, r)
 			}
