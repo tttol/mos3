@@ -9,7 +9,7 @@ import (
 )
 
 func TestListObjects(t *testing.T) {
-	// Create a temporary directory for testing
+	// Create a temporary directory and file for testing
 	tempDir := "test-upload"
 	err := os.Mkdir(tempDir, 0777)
 	if err != nil {
@@ -17,7 +17,6 @@ func TestListObjects(t *testing.T) {
 	}
 	defer os.RemoveAll(tempDir)
 
-	// Create test files and directories
 	err = os.MkdirAll(filepath.Join(tempDir, "dir1"), os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
@@ -33,28 +32,23 @@ func TestListObjects(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Call the ListObjects function
-	items, err := ListObjects(filepath.Join(tempDir), "test-upload")
+	// actual
+	actualItems, err := ListObjects(filepath.Join(tempDir), "test-upload")
 	if err != nil {
 		t.Fatalf("ListObjects returned an error: %v", err)
 	}
 
-	// Define expected results
+	// expected
 	expectedItems := []Item{
 		{Key: "dir1/file2.txt", Size: int64(len("file2 content"))},
 		{Key: "file1.txt", Size: int64(len("file1 content"))},
 	}
 
-	// Check the number of items
-	if len(items) != len(expectedItems) {
-		t.Fatalf("Expected %d items, got %d", len(expectedItems), len(items))
-	}
-
-	// Check each item
-	for i, item := range items {
-		if item.Key != expectedItems[i].Key || item.Size != expectedItems[i].Size {
-			t.Errorf("Expected item %v, got %v", expectedItems[i], item)
-		}
+	// assertion
+	assert.Equal(t, len(actualItems), len(expectedItems))
+	for i, item := range actualItems {
+		assert.Equal(t, item.Key, expectedItems[i].Key)
+		assert.Equal(t, item.Size, expectedItems[i].Size)
 	}
 }
 
