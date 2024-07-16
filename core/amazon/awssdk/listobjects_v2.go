@@ -10,11 +10,12 @@ import (
 )
 
 type ListBucketResult struct {
-	XMLName xml.Name `xml:"ListBucketResult"`
-	Name    string   `xml:"Name"`
-	Prefix  string   `xml:"Prefix"`
-	Marker  string   `xml:"Marker"`
-	Items   []Item   `xml:"Contents"`
+	XMLName     xml.Name `xml:"ListBucketResult"`
+	Name        string   `xml:"Name"`
+	Prefix      string   `xml:"Prefix"`
+	Marker      string   `xml:"Marker"`
+	Items       []Item   `xml:"Contents"`
+	IsTruncated bool     `xml:"IsTruncated"`
 }
 
 type Item struct {
@@ -25,7 +26,7 @@ type Item struct {
 func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 	slog.Info("ListObjectsV2 is called.")
 
-	path := strings.Split(r.URL.Path, "?list-type=2")[0] // It has been confirmed in the previous process controller.go that `?list-type=2` is included.
+	path := strings.Split(r.URL.Path, "?list-type=2")[0]
 	dir := strings.TrimPrefix(path, "/")
 	if dir == "" {
 		slog.Error("No directory specified in the query parameter")
@@ -33,7 +34,6 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Define the target directory
 	rootDir := filepath.Join("upload", dir)
 
 	var items []Item
@@ -43,7 +43,7 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 		}
 		if !info.IsDir() {
 			items = append(items, Item{
-				Key:  filepath.ToSlash(path[len("upload/"):]), // Convert to a relative path
+				Key:  filepath.ToSlash(path[len("upload/"):]),
 				Size: info.Size(),
 			})
 		}
@@ -57,9 +57,17 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 
 	slog.Info("Files are below", "files", items)
 
+	isTruncated := false
+	// Add logic to determine if the result is truncated
+	if len(items) > 1000 {
+		isTruncated = true
+		items = items[:1000]
+	}
+
 	response := ListBucketResult{
-		Name:  dir,
-		Items: items,
+		Name:        dir,
+		Items:       items,
+		IsTruncated: isTruncated,
 	}
 
 	w.Header().Set("Content-Type", "application/xml")
