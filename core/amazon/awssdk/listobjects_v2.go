@@ -23,7 +23,7 @@ type Item struct {
 	Size int64  `xml:"Size"`
 }
 
-func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
+func ListObjectsV2(w http.ResponseWriter, r *http.Request, uploadDirName string) {
 	slog.Info("ListObjectsV2 is called.")
 
 	path := strings.Split(r.URL.Path, "?list-type=2")[0] // It has been confirmed in the previous process controller.go that `?list-type=2` is included.
@@ -34,9 +34,9 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rootDir := filepath.Join("upload", dir)
+	rootDir := filepath.Join(uploadDirName, dir)
 
-	items, err := ListObjects(rootDir)
+	items, err := ListObjects(rootDir, uploadDirName)
 	if err != nil {
 		slog.Error("Failed to list objects", "error", err)
 		http.Error(w, "Failed to list objects", http.StatusInternalServerError)
@@ -60,7 +60,7 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func ListObjects(rootDir string) ([]Item, error) {
+func ListObjects(rootDir string, uploadDirName string) ([]Item, error) {
 	var items []Item
 	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -68,7 +68,7 @@ func ListObjects(rootDir string) ([]Item, error) {
 		}
 		if !info.IsDir() {
 			items = append(items, Item{
-				Key:  filepath.ToSlash(path[len("upload/"):]),
+				Key:  filepath.ToSlash(path[len(uploadDirName+"/"):]),
 				Size: info.Size(),
 			})
 		}

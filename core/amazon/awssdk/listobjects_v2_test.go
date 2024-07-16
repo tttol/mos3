@@ -1,10 +1,62 @@
 package awssdk
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/go-playground/assert/v2"
 )
+
+func TestListObjects(t *testing.T) {
+	// Create a temporary directory for testing
+	tempDir := "test-upload"
+	err := os.Mkdir(tempDir, 0777)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// Create test files and directories
+	err = os.MkdirAll(filepath.Join(tempDir, "dir1"), os.ModePerm)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = os.WriteFile(filepath.Join(tempDir, "file1.txt"), []byte("file1 content"), os.ModePerm)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = os.WriteFile(filepath.Join(tempDir, "dir1", "file2.txt"), []byte("file2 content"), os.ModePerm)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Call the ListObjects function
+	items, err := ListObjects(filepath.Join(tempDir), "test-upload")
+	if err != nil {
+		t.Fatalf("ListObjects returned an error: %v", err)
+	}
+
+	// Define expected results
+	expectedItems := []Item{
+		{Key: "dir1/file2.txt", Size: int64(len("file2 content"))},
+		{Key: "file1.txt", Size: int64(len("file1 content"))},
+	}
+
+	// Check the number of items
+	if len(items) != len(expectedItems) {
+		t.Fatalf("Expected %d items, got %d", len(expectedItems), len(items))
+	}
+
+	// Check each item
+	for i, item := range items {
+		if item.Key != expectedItems[i].Key || item.Size != expectedItems[i].Size {
+			t.Errorf("Expected item %v, got %v", expectedItems[i], item)
+		}
+	}
+}
 
 func TestIsTruncated(t *testing.T) {
 	items1 := make([]Item, 1)
