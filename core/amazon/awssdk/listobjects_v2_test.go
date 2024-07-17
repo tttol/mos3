@@ -17,17 +17,17 @@ func TestListObjects(t *testing.T) {
 	}
 	defer os.RemoveAll(tempDir)
 
-	err = os.MkdirAll(filepath.Join(tempDir, "dir1"), os.ModePerm)
+	err = os.MkdirAll(filepath.Join(tempDir, "test-bucket", "dir1"), os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = os.WriteFile(filepath.Join(tempDir, "file1.txt"), []byte("file1 content"), os.ModePerm)
+	err = os.WriteFile(filepath.Join(tempDir, "test-bucket", "file1.txt"), []byte("file1 content"), os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	err = os.WriteFile(filepath.Join(tempDir, "dir1", "file2.txt"), []byte("file2 content"), os.ModePerm)
+	err = os.WriteFile(filepath.Join(tempDir, "test-bucket", "dir1", "file2.txt"), []byte("file2 content"), os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -79,4 +79,13 @@ func TestIsTruncated(t *testing.T) {
 	assert.Equal(t, isTruncated1200, true)
 	assert.Equal(t, actualItems1200, items1200[:1000])
 
+}
+
+func TestExtractKey(t *testing.T) {
+	assert.Equal(t, ExtractKey("upload/test-bucket/aaa.txt"), "aaa.txt")
+	assert.Equal(t, ExtractKey("upload/test-bucket/dir1/aaa.txt"), "dir1/aaa.txt")
+	assert.Equal(t, ExtractKey("upload/test-bucket/dir1/dir2/dir3/dir4/aaa.txt"), "dir1/dir2/dir3/dir4/aaa.txt")
+	assert.Equal(t, ExtractKey("upload/aaa.txt"), "")
+	assert.Equal(t, ExtractKey("aaa.txt"), "")
+	assert.Equal(t, ExtractKey(""), "")
 }

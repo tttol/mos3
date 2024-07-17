@@ -68,7 +68,7 @@ func ListObjects(rootDir string, uploadDirName string) ([]Item, error) {
 		}
 		if !info.IsDir() {
 			items = append(items, Item{
-				Key:  filepath.ToSlash(path[len(uploadDirName+"/"):]),
+				Key:  ExtractKey(path),
 				Size: info.Size(),
 			})
 		}
@@ -84,4 +84,14 @@ func IsTruncated(items []Item) (bool, []Item) {
 	} else {
 		return false, items
 	}
+}
+
+func ExtractKey(path string) string {
+	splitted := strings.Split(path, "/")
+	if len(splitted) < 3 {
+		slog.Warn("Failed to extract key. Unexpected number of slash in path.", "path", path)
+		return ""
+	}
+
+	return strings.Join(splitted[2:], "/")
 }
