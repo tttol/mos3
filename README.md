@@ -71,20 +71,3 @@ S3Client s3 = S3Client.builder()
 
 # Contributing guidelines
 Thank you for your interest in contributing to our project. Please visit [CONTRIBUTING.md](https://github.com/tttol/mos3/blob/main/CONTRIBUTING.md) for additional information on contributing to this project.
-
-# TBD
-- Accept requests from AWS SDK for Java (Priority: High)
-  - **DL** 
-    - [x] listObjectsV2
-    - [x] getObject
-  - **Upload**
-    - [x] putObject
-  - cp
-    - [x] copyObject
-  - rm
-    - [x] deleteObject
-- Accept requests from CLI (Priority: Low)
-  - [x] ls
-  - [x] cp
-  - [ ] rm
-  - [ ] mv
