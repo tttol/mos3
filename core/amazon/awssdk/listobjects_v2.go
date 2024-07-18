@@ -42,14 +42,20 @@ func ListObjectsV2(w http.ResponseWriter, r *http.Request, uploadDirName string)
 		http.Error(w, "Failed to list objects", http.StatusInternalServerError)
 		return
 	}
+	slog.Info("Items are below", "files", items)
 
-	slog.Info("Files are below", "files", items)
+	prefix := r.URL.Query().Get("prefix")
+	delimiter := r.URL.Query().Get("delimiter")
+	filteredItems := FilterWithPrefix(prefix, delimiter, items)
 
-	isTruncated, items := IsTruncated(items)
+	slog.Info("FilteredItems are below", "files", filteredItems)
+
+	isTruncated, truncatedItems := IsTruncated(filteredItems)
+	slog.Info("TruncatedItems are below", "files", truncatedItems)
 
 	response := ListObjectsResult{
 		Name:        dir,
-		Items:       items,
+		Items:       truncatedItems,
 		IsTruncated: isTruncated,
 	}
 
@@ -76,6 +82,18 @@ func ListObjects(rootDir string, uploadDirName string) ([]Item, error) {
 	})
 
 	return items, err
+}
+
+func FilterWithPrefix(prefix string, delimiter string, items []Item) []Item {
+	var filteredItems []Item
+
+	p := strings.Replace(prefix, delimiter, "/", -1)
+	for _, item := range items {
+		if strings.HasPrefix(item.Key, p) {
+			filteredItems = append(filteredItems, item)
+		}
+	}
+	return filteredItems
 }
 
 func IsTruncated(items []Item) (bool, []Item) {

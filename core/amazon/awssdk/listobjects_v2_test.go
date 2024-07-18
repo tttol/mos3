@@ -52,6 +52,40 @@ func TestListObjects(t *testing.T) {
 	}
 }
 
+func TestFilterWithPrefix(t *testing.T) {
+	items := []Item{
+		{Key: "file1.txt", Size: 1},
+		{Key: "dir1/file1.txt", Size: 1},
+		{Key: "dir1/file2.txt", Size: 1},
+		{Key: "dir1/pic1.png", Size: 1},
+		{Key: "dir1/pic2.png", Size: 1},
+		{Key: "dir1/dir2/file1.txt", Size: 1},
+		{Key: "dir1/dir2/file2.txt", Size: 1},
+		{Key: "dir1/dir2/file3.txt", Size: 1},
+	}
+
+	expected := []Item{{Key: "file1.txt", Size: 1}}
+	assert.Equal(t, FilterWithPrefix("file", "%2F", items), expected)
+
+	expected = []Item{{Key: "dir1/file1.txt", Size: 1},
+		{Key: "dir1/file2.txt", Size: 1},
+		{Key: "dir1/pic1.png", Size: 1},
+		{Key: "dir1/pic2.png", Size: 1},
+		{Key: "dir1/dir2/file1.txt", Size: 1},
+		{Key: "dir1/dir2/file2.txt", Size: 1},
+		{Key: "dir1/dir2/file3.txt", Size: 1}}
+	assert.Equal(t, FilterWithPrefix("dir1", "%2F", items), expected)
+
+	expected = []Item{{Key: "dir1/file1.txt", Size: 1},
+		{Key: "dir1/file2.txt", Size: 1}}
+	assert.Equal(t, FilterWithPrefix("dir1/fi", "%2F", items), expected)
+
+	expected = []Item{{Key: "dir1/dir2/file1.txt", Size: 1},
+		{Key: "dir1/dir2/file2.txt", Size: 1},
+		{Key: "dir1/dir2/file3.txt", Size: 1}}
+	assert.Equal(t, FilterWithPrefix("dir1/dir2", "%2F", items), expected)
+}
+
 func TestIsTruncated(t *testing.T) {
 	items1 := make([]Item, 1)
 	items999 := make([]Item, 999)
