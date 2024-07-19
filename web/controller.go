@@ -21,6 +21,7 @@ func CliSdkHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	} else if strings.Contains(userAgent, "command/s3.cp") {
 		awscli.Cp(w, r)
+		return
 	}
 
 	// AWS SDK request

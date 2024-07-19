@@ -49,6 +49,7 @@ func S3Handler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), status)
 			return
 		}
+		return
 	}
 
 	slog.Info("dataMap", "dataMap", dataMap)
